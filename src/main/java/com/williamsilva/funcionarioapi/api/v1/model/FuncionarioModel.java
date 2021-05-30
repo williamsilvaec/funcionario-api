@@ -1,7 +1,7 @@
 package com.williamsilva.funcionarioapi.api.v1.model;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class FuncionarioModel {
 
@@ -9,7 +9,8 @@ public class FuncionarioModel {
     private String nome;
     private String sobrenome;
     private String email;
-    private LocalDateTime dataCadastro;
+    private String pis;
+    private LocalDate dataCadastro;
 
     public Integer getId() {
         return id;
@@ -43,11 +44,19 @@ public class FuncionarioModel {
         this.email = email;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public String getPis() {
+        return pis;
+    }
+
+    public void setPis(String pis) {
+        this.pis = pis;
+    }
+
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 }

@@ -1,7 +1,7 @@
 package com.williamsilva.funcionarioapi.domain.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -24,8 +24,8 @@ public class Funcionario {
     @Column(length = 11, nullable = false)
     private String pis;
 
-    @Column(name = "DATACADASTRO")
-    private LocalDateTime dataCadastro;
+    @Column(name = "DATA_CADASTRO")
+    private LocalDate dataCadastro;
 
     public Integer getId() {
         return id;
@@ -67,7 +67,7 @@ public class Funcionario {
         this.pis = pis;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
@@ -77,7 +77,7 @@ public class Funcionario {
 
     @PrePersist
     public void prePersist() {
-        this.dataCadastro = LocalDateTime.now();
+        this.dataCadastro = LocalDate.now();
     }
 
     @Override

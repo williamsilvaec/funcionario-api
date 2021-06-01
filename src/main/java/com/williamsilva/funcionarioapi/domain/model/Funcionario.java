@@ -9,7 +9,7 @@ import java.util.Objects;
 public class Funcionario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(length = 30, nullable = false)
@@ -24,7 +24,7 @@ public class Funcionario {
     @Column(length = 11, nullable = false)
     private String pis;
 
-    @Column(name = "DATA_CADASTRO")
+    @Column(name = "DATA_CADASTRO", nullable = false)
     private LocalDate dataCadastro;
 
     public Integer getId() {

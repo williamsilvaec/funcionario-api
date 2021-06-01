@@ -13,7 +13,7 @@ public class FuncionarioSpec {
     public static Specification<Funcionario> comFiltro(FuncionarioFiltro filtro) {
         return (root, query, builder) -> {
 
-            var predicates = new ArrayList<Predicate>();
+            ArrayList<Predicate> predicates = new ArrayList<>();
 
             if (filtro.getCodigo() != null) {
                 predicates.add(builder.equal(root.get("id"), filtro.getCodigo()));

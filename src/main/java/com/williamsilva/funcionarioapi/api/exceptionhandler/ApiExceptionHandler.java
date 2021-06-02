@@ -1,5 +1,6 @@
 package com.williamsilva.funcionarioapi.api.exceptionhandler;
 
+import com.williamsilva.funcionarioapi.domain.exception.EntidadeEmUsoException;
 import com.williamsilva.funcionarioapi.domain.exception.EntidadeNaoEncontradaException;
 import com.williamsilva.funcionarioapi.domain.exception.NegocioException;
 import org.slf4j.Logger;
@@ -95,6 +96,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         String detail = MSG_ERRO_GENERICA_USUARIO_FINAL;
 
         logger.error(ex.getMessage(), ex);
+
+        Problem problem = new Problem(status.value(), title, detail, detail);
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException ex,  WebRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String title = ProblemType.ENTIDADE_EM_USO.getTitle();
+        String detail = ex.getMessage();
 
         Problem problem = new Problem(status.value(), title, detail, detail);
 

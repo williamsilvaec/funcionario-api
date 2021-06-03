@@ -32,13 +32,11 @@ public class FuncionarioService {
 
     @Transactional
     public Funcionario salvar(Funcionario funcionario) {
-        if (!funcionario.isNovo()) {
-            return funcionarioRepository.save(funcionario);
-        }
+        funcionarioRepository.detach(funcionario);
 
         Optional<Funcionario> funcionarioOptional = funcionarioRepository.findByPis(funcionario.getPis());
 
-        if (funcionarioOptional.isPresent()) {
+        if (funcionarioOptional.isPresent() && !funcionarioOptional.get().equals(funcionario)) {
             throw new NegocioException(String.format("Já existe um funcionário com o PIS %s cadastrado",
                     funcionario.getPis()));
         }

@@ -14,8 +14,14 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
         super(entityInformation, entityManager);
         this.manager = entityManager;
     }
+
     @Override
     public void detach(T entity) {
         manager.detach(entity);
+    }
+
+    @Override
+    public T merge(T entity) {
+        return manager.merge(entity);
     }
 }

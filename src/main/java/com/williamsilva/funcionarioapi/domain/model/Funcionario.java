@@ -71,10 +71,6 @@ public class Funcionario {
         return dataCadastro;
     }
 
-    public boolean isNovo() {
-        return getId() == null;
-    }
-
     @PrePersist
     public void prePersist() {
         this.dataCadastro = LocalDate.now();

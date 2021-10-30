@@ -1,9 +1,15 @@
 package com.williamsilva.funcionarioapi.domain.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "CARGO")
 public class Cargo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String descricao;

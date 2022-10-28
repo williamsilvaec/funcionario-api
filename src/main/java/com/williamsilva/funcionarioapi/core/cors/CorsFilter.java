@@ -14,7 +14,8 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-    private String origemPermitida = "https://wsfuncionarios-angular.herokuapp.com";
+//    private String origemPermitida = "https://wsfuncionarios-angular.herokuapp.com";
+    private String origemPermitida = "https://funcionarios-ui.herokuapp.com";
 //    private String origemPermitida = "http://localhost:4200";
 
     @Override

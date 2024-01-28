@@ -10,12 +10,13 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String MSG_ERRO_GENERICA_USUARIO_FINAL = "Ocorreu um erro interno inesperado no sistema.";
@@ -35,9 +36,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         this.messageSource = messageSource;
     }
 
+
+
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         String title = ProblemType.RECURSO_NAO_ENCONTRADO.getTitle();
         String detail = String.format("O recurso %s, que você tentou acessar, não existe.", ex.getRequestURL());
@@ -48,16 +51,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                  HttpHeaders headers, HttpStatus status, WebRequest request) {
+                  HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
         return handleValidationInternal(ex, headers, HttpStatus.BAD_REQUEST, request, ex.getBindingResult());
     }
 
     @Override
     protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers,
-                                                        HttpStatus status, WebRequest request) {
+                                                        HttpStatusCode status, WebRequest request) {
 
         if (ex instanceof MethodArgumentTypeMismatchException) {
+
             return handleMethodArgumentTypeMismatch(
                     (MethodArgumentTypeMismatchException) ex, headers, status, request);
         }
@@ -139,7 +143,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<Object> handleMethodArgumentTypeMismatch(
             MethodArgumentTypeMismatchException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            HttpStatusCode status, WebRequest request) {
 
         ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
 

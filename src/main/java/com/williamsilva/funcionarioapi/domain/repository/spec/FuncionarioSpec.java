@@ -2,10 +2,11 @@ package com.williamsilva.funcionarioapi.domain.repository.spec;
 
 import com.williamsilva.funcionarioapi.domain.filter.FuncionarioFiltro;
 import com.williamsilva.funcionarioapi.domain.model.Funcionario;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.Predicate;
+
 import java.util.ArrayList;
 
 public class FuncionarioSpec {

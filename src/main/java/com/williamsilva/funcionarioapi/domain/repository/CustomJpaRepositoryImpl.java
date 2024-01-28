@@ -1,9 +1,9 @@
 package com.williamsilva.funcionarioapi.domain.repository;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-import javax.persistence.EntityManager;
 
 public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
         implements CustomJpaRepository<T, ID> {

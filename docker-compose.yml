@@ -1,0 +1,40 @@
+version: '3.9'
+
+networks:
+  funcionario-network:
+    driver: bridge
+
+services:
+
+  funcionario-mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: funcionario-db
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
+    ports:
+      - "13306:3306"
+    networks:
+      - funcionario-network
+
+  funcionario-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: funcionario-api
+    container_name: funcionarios-api
+    command: [ "/wait-for-it.sh", "funcionario-mysql:3306", "-t", "60", "--", "java", "-jar", "funcionario-api.jar" ]
+    environment:
+      DB_HOST: funcionario-mysql
+      SPRING_PROFILES_ACTIVE: dev
+    ports:
+      - "8080:8080"
+    networks:
+      - funcionario-network
+    depends_on:
+      - funcionario-mysql
+
+

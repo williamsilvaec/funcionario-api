@@ -2,25 +2,18 @@ package com.williamsilva.funcionarioapi.api.v1.controller;
 
 import com.williamsilva.funcionarioapi.api.v1.model.FuncionarioModel;
 import com.williamsilva.funcionarioapi.api.v1.model.input.FuncionarioInput;
-import com.williamsilva.funcionarioapi.domain.dto.EtiquetaDto;
 import com.williamsilva.funcionarioapi.domain.filter.FuncionarioFiltro;
 import com.williamsilva.funcionarioapi.domain.model.Funcionario;
 import com.williamsilva.funcionarioapi.domain.service.FuncionarioService;
-import com.williamsilva.funcionarioapi.views.pdf.GeneratePdfReport;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,22 +69,6 @@ public class FuncionarioController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Integer id) {
         funcionarioService.excluir(id);
-    }
-
-    @GetMapping(value = "/etiqueta.pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> gerarEtiqueta(@RequestParam(value = "funcionarioId") Integer id) {
-        Funcionario funcionario = funcionarioService.buscarOuFalhar(id);
-
-        ByteArrayInputStream bis = GeneratePdfReport.generateEtiqueta(new EtiquetaDto(funcionario));
-
-        var headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=etiqueta.pdf");
-
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(bis));
     }
 
     private Funcionario toEntity(FuncionarioInput funcionarioInput) {
